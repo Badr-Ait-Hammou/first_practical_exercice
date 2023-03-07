@@ -2,9 +2,9 @@ package com.example.first_practical_ex.ws;
 
 import com.example.first_practical_ex.dao.FiliereRepository;
 import com.example.first_practical_ex.entity.Filiere;
-import com.example.first_practical_ex.entity.Student;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
+
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
@@ -17,10 +17,18 @@ public class FiliereController {
 
     @Autowired
     private FiliereRepository filiereRepository;
+    @Autowired
+    StudentController studentController;
 
+    @Transactional
     @DeleteMapping("/id/{id}")
-    public void deleteById(@PathVariable int id) {
-        filiereRepository.deleteById(id);
+    public int deleteById(@PathVariable int id) {
+        if(studentController.findByFiliereId(id)!=null && filiereRepository.findById(id)!=null) {
+            studentController.deleteByFiliereId(id);
+            filiereRepository.deleteById(id);
+            return 1;
+        }else
+            return -1;
     }
     @GetMapping("/")
     public List<Filiere> findAll() {
