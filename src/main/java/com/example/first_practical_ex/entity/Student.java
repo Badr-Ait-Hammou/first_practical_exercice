@@ -14,6 +14,7 @@ public class Student {
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
     @ManyToOne
+    @JoinColumn(name = "filiere")
     private Filiere filiere;
 
     public Student() {

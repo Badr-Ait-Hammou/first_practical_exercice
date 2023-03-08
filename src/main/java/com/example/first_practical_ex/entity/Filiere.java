@@ -1,5 +1,6 @@
 package com.example.first_practical_ex.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -11,13 +12,23 @@ public class Filiere {
     private int id;
     private String code;
     private String libelle;
-    /*
-    @OneToMany
-    private List<Student> studentList;
-    */
 
+    @OneToMany(mappedBy = "filiere",cascade = CascadeType.ALL)
+   //@OneToMany(mappedBy = "filiere")
+   @JsonIgnoreProperties("filiere")
+    private List<Student> studentList;
+
+
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
 
     public Filiere() {
+
         super();
     }
 
