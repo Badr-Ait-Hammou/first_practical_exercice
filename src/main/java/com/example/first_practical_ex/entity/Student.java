@@ -1,5 +1,6 @@
 package com.example.first_practical_ex.entity;
 
+import com.fasterxml.jackson.annotation.JsonIncludeProperties;
 import jakarta.persistence.*;
 
 import java.util.Date;
@@ -14,7 +15,7 @@ public class Student {
     @Temporal(TemporalType.DATE)
     private Date dateNaissance;
     @ManyToOne
-    @JoinColumn(name = "filiere")
+    @JsonIncludeProperties(value = {"libelle"})
     private Filiere filiere;
 
     public Student() {
